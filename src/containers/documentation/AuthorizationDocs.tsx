@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { History } from 'history';
 import * as React from 'react';
 import Helmet from 'react-helmet';

@@ -1,7 +1,4 @@
----
-imports:
-  '{ CodeWrapper }': ../../../components
----
+import { CodeWrapper } from '../../../components'
 
 ## Getting Started {tabIndex="-1"}
 
@@ -34,7 +31,7 @@ Initiate the OpenID Connect authorization by directing your application's users 
 
 <CodeWrapper>
 
-```plaintext
+```
 https://sandbox-api.va.gov/oauth2/authorization
 ```
 
@@ -57,7 +54,7 @@ Example Authorization URL:
 
 <CodeWrapper>
 
-```plaintext
+```
 https://sandbox-api.va.gov/oauth2/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
@@ -78,7 +75,7 @@ After the user confirms they want to authorize your application to access their 
 
 <CodeWrapper>
 
-```plaintext
+```
 GET <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj
@@ -254,7 +251,7 @@ Initiate the OpenID Connect authorization by directing your application's users 
 
 <CodeWrapper>
 
-```plaintext
+```
 https://sandbox-api.va.gov/oauth2/authorization
 ```
 
@@ -277,7 +274,7 @@ Example Authorization URL:
 
 <CodeWrapper>
 
-```plaintext
+```
 https://sandbox-api.va.gov/oauth2/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &response_type=code
@@ -300,7 +297,7 @@ After the user confirms they want to authorize your application to access their 
 
 <CodeWrapper>
 
-```plaintext
+```
 GET <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj

@@ -1,14 +1,12 @@
----
-imports:
-  '{ SectionHeaderWrapper }': ../../../components 
-  '{ HashLink }' : 'react-router-hash-link'
----
+import { HashLink } from 'react-router-hash-link'
+import { SectionHeaderWrapper } from '../../../components'
 
 <SectionHeaderWrapper heading="Scopes" id="scopes" />
 
 Scopes define the API endpoint your application is allowed to access. We suggest requesting the fewest number of scopes for which you require a Veteran to provide consent. You can always request access to additional scopes if a Veteran or VSO needs the data while using your application.  
 
 **Existing Scopes are:**
+
 | Scope            | Values and description |
 | ---------------- | ---------------------- |
 | `profile`        | Granted by default, allows access to a user's first and last name and email. |

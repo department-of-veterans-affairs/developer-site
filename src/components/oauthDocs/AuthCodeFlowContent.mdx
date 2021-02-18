@@ -1,9 +1,6 @@
----
-imports:
-  '{ HashLink }' : 'react-router-hash-link'
-  '{ Link }' : 'react-router-dom'
-  '{ APISelector, CodeWrapper }': ../index
----
+import { HashLink } from 'react-router-hash-link'
+import { Link } from 'react-router-dom'
+import { APISelector, CodeWrapper } from '../index'
 
 ### Initiating the Authorization Code Flow {tabIndex="-1" #authorization-code-flow}
 
@@ -14,7 +11,7 @@ Begin the OpenID Connect authorization by using the authorization endpoint, quer
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
 <CodeWrapper>
 
-```plaintext
+```
 https://sandbox-api.va.gov{{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
