@@ -7,8 +7,6 @@ import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
-import { ApplyForm } from './containers/apply/ApplyForm';
-import { ApplySuccess } from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -22,6 +20,7 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import { CONSUMER_PATH, PUBLISHING_PATH } from './types/constants/paths';
+import { Apply } from './containers/apply/Apply';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -45,12 +44,11 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => (
           <Flag
             name={['signups_enabled']}
-            render={ApplyForm}
+            component={Apply}
             fallbackComponent={DisabledApplyForm}
           />
         )}
       />
-      <Route path="/applied" component={ApplySuccess} />
       <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
       <Route
         path="/oauth"

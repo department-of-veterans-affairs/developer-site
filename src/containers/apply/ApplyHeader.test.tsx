@@ -17,11 +17,4 @@ describe('ApplyHeader', () => {
       screen.getByRole('heading', { name: 'Apply for VA Lighthouse Developer Access' }),
     ).toBeInTheDocument();
   });
-
-  it('contains a link to request production access', () => {
-    const requestLink = screen.getByRole('link', { name: 'request production access' });
-
-    expect(requestLink).toBeInTheDocument();
-    expect(requestLink.getAttribute('href')).toBe('/go-live');
-  });
 });

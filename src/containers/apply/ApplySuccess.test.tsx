@@ -2,64 +2,19 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { createStore, combineReducers, compose, applyMiddleware, Store } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { application, initialApplicationState } from '../../reducers';
-import { apiVersioning } from '../../reducers/apiVersioning';
-import { oAuthApiSelection } from '../../reducers/oAuthApiSelection';
 import defaultStore from '../../store';
-import { RootState, ApplySuccessResult } from '../../types';
 
+import { ApplySuccessResult } from '../../types';
 import { ApplySuccess } from './ApplySuccess';
-
-let store: Store;
-
-const createStoreWithResult = (result: ApplySuccessResult): Store =>
-  createStore(
-    combineReducers<RootState>({
-      apiVersioning,
-      application,
-      oAuthApiSelection,
-    }),
-    {
-      application: {
-        ...initialApplicationState,
-        result,
-      },
-    },
-    compose(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
-  );
 
 describe('ApplySuccess with results', () => {
   describe('with results', () => {
     describe('all apis', () => {
       beforeEach(() => {
-        store = createStoreWithResult({
-          apis: {
-            appeals: true,
-            benefits: true,
-            claims: true,
-            communityCare: true,
-            confirmation: true,
-            facilities: true,
-            health: true,
-            vaForms: true,
-            verification: true,
-          },
-          clientID: 'gimli',
-          clientSecret: 'sonofgloin',
-          email: 'gimli@eredluin.com',
-          kongUsername: 'jfdkljadsfj',
-          redirectURI: 'http://localhost:3000',
-          token: 'elffriend',
-        });
-
         render(
-          <Provider store={store}>
-            <MemoryRouter>
-              <ApplySuccess />
-            </MemoryRouter>
-          </Provider>,
+          <MemoryRouter>
+            <ApplySuccess result={{} as ApplySuccessResult} />
+          </MemoryRouter>
         );
       });
 
@@ -70,32 +25,10 @@ describe('ApplySuccess with results', () => {
 
     describe('standard apis', () => {
       beforeEach(() => {
-        store = createStoreWithResult({
-          apis: {
-            appeals: true,
-            benefits: true,
-            claims: false,
-            communityCare: false,
-            confirmation: true,
-            facilities: true,
-            health: false,
-            vaForms: true,
-            verification: false,
-          },
-          clientID: 'gimli',
-          clientSecret: 'sonofgloin',
-          email: 'gimli@eredluin.com',
-          kongUsername: 'jfdkljadsfj',
-          redirectURI: 'http://localhost:3000',
-          token: 'elf-friend',
-        });
-
         render(
-          <Provider store={store}>
-            <MemoryRouter>
-              <ApplySuccess />
-            </MemoryRouter>
-          </Provider>,
+          <MemoryRouter>
+            <ApplySuccess result={{} as ApplySuccessResult} />
+          </MemoryRouter>
         );
       });
 
@@ -127,32 +60,10 @@ describe('ApplySuccess with results', () => {
 
     describe('oauth apis', () => {
       beforeEach(() => {
-        store = createStoreWithResult({
-          apis: {
-            appeals: false,
-            benefits: false,
-            claims: true,
-            communityCare: true,
-            confirmation: false,
-            facilities: false,
-            health: true,
-            vaForms: false,
-            verification: true,
-          },
-          clientID: 'gimli',
-          clientSecret: 'sonofgloin',
-          email: 'gimli@eredluin.com',
-          kongUsername: 'jfdkljadsfj',
-          redirectURI: 'http://localhost:3000',
-          token: 'elf-friend',
-        });
-
         render(
-          <Provider store={store}>
-            <MemoryRouter>
-              <ApplySuccess />
-            </MemoryRouter>
-          </Provider>,
+          <MemoryRouter>
+            <ApplySuccess result={{} as ApplySuccessResult} />
+          </MemoryRouter>
         );
       });
 
@@ -199,7 +110,7 @@ describe('ApplySuccess with results', () => {
     it('renders only an error', () => {
       const { getByText } = render(
         <Provider store={defaultStore}>
-          <ApplySuccess />
+          <ApplySuccess result={{} as ApplySuccessResult} />
         </Provider>,
       );
 

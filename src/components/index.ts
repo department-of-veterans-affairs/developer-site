@@ -8,7 +8,6 @@ export * from './pageContent/PageContent';
 export * from './search/Search';
 export * from './sideNav/SideNav';
 export * from './sideNav/SideNavEntry';
-export * from './form/Form';
 export * from './onlyTags/OnlyTags';
 export * from './mainNavItem/MainNavItem';
 export * from './banner/Banner';

@@ -1,43 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { createStore, combineReducers, compose, applyMiddleware, AnyAction, Store } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
-import * as applyActions from '../../actions/apply';
-import { application, initialApplicationState } from '../../reducers';
-import { oAuthApiSelection } from '../../reducers/oAuthApiSelection';
-import { apiVersioning } from '../../reducers/apiVersioning';
-import { RootState } from '../../types';
 
 import { ApplyForm } from './ApplyForm';
 
-let store: Store;
-let spyDispatch: jest.SpyInstance<unknown, [AnyAction]>;
-
 describe('ApplyForm', () => {
   beforeEach(() => {
-    store = createStore(
-      combineReducers<RootState>({
-        apiVersioning,
-        application,
-        oAuthApiSelection,
-      }),
-      {
-        application: initialApplicationState,
-      },
-      compose(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
-    );
-
-    spyDispatch = jest.spyOn(store, 'dispatch');
-
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <ApplyForm />
-        </MemoryRouter>
-      </Provider>,
+      <MemoryRouter>
+        <ApplyForm onSuccess={() => {}} />
+      </MemoryRouter>
     );
   });
 
@@ -148,8 +121,6 @@ describe('ApplyForm', () => {
     it('displays `Sending...` during form submission', () => {
       expect(screen.queryByRole('button', { name: 'Sending...' })).not.toBeInTheDocument();
 
-      store.dispatch(applyActions.submitFormBegin());
-
       expect(screen.getByRole('button', { name: 'Sending...' })).toBeInTheDocument();
     });
 
@@ -169,18 +140,11 @@ describe('ApplyForm', () => {
       userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
       userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
 
-      const mockActionsReturn = jest.fn();
-      const spyActions = jest.spyOn(applyActions, 'submitForm');
-      spyActions.mockReturnValueOnce(mockActionsReturn);
-
       const submitButton: HTMLButtonElement = screen.getByRole('button', {
         name: 'Submit',
       }) as HTMLButtonElement;
 
       userEvent.click(submitButton);
-
-      expect(spyActions).toHaveBeenCalledTimes(1);
-      expect(spyDispatch).toHaveBeenCalledWith(mockActionsReturn);
     });
   });
 
@@ -192,8 +156,6 @@ describe('ApplyForm', () => {
         }),
       ).not.toBeInTheDocument();
 
-      store.dispatch(applyActions.submitFormError('error'));
-
       expect(
         screen.queryByRole('heading', {
           name: 'We encountered a server error while saving your form. Please try again later.',
@@ -202,8 +164,6 @@ describe('ApplyForm', () => {
     });
 
     it('contains a link to the support page', () => {
-      store.dispatch(applyActions.submitFormError('error'));
-
       const supportLink = screen.getByRole('link', { name: 'Support page' });
 
       expect(supportLink).toBeInTheDocument();
