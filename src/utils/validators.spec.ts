@@ -40,6 +40,6 @@ describe('validatePresence', () => {
   it('should not add validation if the email is valid', () => {
     expect(
       validatePresence('email', 'goodemail@example.com'),
-    ).toEqual('email must not be blank.');
+    ).toBeUndefined();
   });
 });

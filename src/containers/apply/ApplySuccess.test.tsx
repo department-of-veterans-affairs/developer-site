@@ -1,10 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import defaultStore from '../../store';
 
-import { ApplySuccessResult } from '../../types';
 import { ApplySuccess } from './ApplySuccess';
 
 describe('ApplySuccess with results', () => {
@@ -13,7 +10,17 @@ describe('ApplySuccess with results', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess result={{} as ApplySuccessResult} />
+            <ApplySuccess
+              result={{
+                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
+                clientID: 'gimli',
+                clientSecret: 'sonofgloin',
+                email: 'gimli@eredluin.com',
+                kongUsername: '',
+                redirectURI: '',
+                token: 'elf-friend',
+              }}
+            />
           </MemoryRouter>
         );
       });
@@ -27,7 +34,17 @@ describe('ApplySuccess with results', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess result={{} as ApplySuccessResult} />
+            <ApplySuccess
+              result={{
+                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
+                clientID: 'gimli',
+                clientSecret: 'sonofgloin',
+                email: 'gimli@eredluin.com',
+                kongUsername: '',
+                redirectURI: '',
+                token: 'elf-friend',
+              }}
+            />
           </MemoryRouter>
         );
       });
@@ -62,7 +79,17 @@ describe('ApplySuccess with results', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess result={{} as ApplySuccessResult} />
+            <ApplySuccess
+              result={{
+                apis: ['claims', 'communityCare', 'health', 'verification'],
+                clientID: 'gimli',
+                clientSecret: 'sonofgloin',
+                email: 'gimli@eredluin.com',
+                kongUsername: '',
+                redirectURI: '',
+                token: 'elf-friend',
+              }}
+            />
           </MemoryRouter>
         );
       });
@@ -103,18 +130,6 @@ describe('ApplySuccess with results', () => {
         expect(oauthDocumentationLink).toBeInTheDocument();
         expect(oauthDocumentationLink.getAttribute('href')).toBe('/oauth');
       });
-    });
-  });
-
-  describe('without results', () => {
-    it('renders only an error', () => {
-      const { getByText } = render(
-        <Provider store={defaultStore}>
-          <ApplySuccess result={{} as ApplySuccessResult} />
-        </Provider>,
-      );
-
-      expect(getByText('Error! Unable to render apply success')).toBeInTheDocument();
     });
   });
 });
