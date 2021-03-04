@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { FormField } from 'src/components';
+import { FormField } from '../../components';
 
 interface APICheckbox {
   id: string;

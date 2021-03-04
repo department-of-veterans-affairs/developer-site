@@ -1,6 +1,6 @@
 import { FormikErrors } from 'formik';
-import { APPLY_FIELDS_TO_URL_FRAGMENTS } from 'src/types/constants';
-import { validateEmail, validatePresence, validateOAuthRedirectURI } from 'src/utils/validators';
+import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
+import { validateEmail, validatePresence, validateOAuthRedirectURI } from '../../utils/validators';
 import { includesOAuthAPI } from '../../apiDefs/query';
 import { Values } from './ApplyForm';
 

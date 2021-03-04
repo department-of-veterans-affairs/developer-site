@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { FC, useState } from 'react';
-import { PAGE_HEADER_ID } from 'src/types/constants';
+import { PAGE_HEADER_ID } from '../../types/constants';
 import { ApplySuccessResult } from '../../types';
 import { ApplyForm } from './ApplyForm';
 import ApplyHeader from './ApplyHeader';

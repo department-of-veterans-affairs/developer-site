@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FormField } from 'src/components';
+import { FormField } from '../../components';
 
 const DeveloperInfo = (): JSX.Element => (
   <>

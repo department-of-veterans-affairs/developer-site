@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Field, ErrorMessage } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
-import toHtmlId from 'src/toHtmlId';
+import toHtmlId from '../../../toHtmlId';
 import { BaseProps, SubComponentProps } from '../FormField';
 
 type FieldProps = ComponentPropsWithRef<typeof Field>;

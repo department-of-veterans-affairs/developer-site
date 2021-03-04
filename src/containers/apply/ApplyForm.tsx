@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
 
-import Sentry from '@sentry/browser';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 
 import { Form, Formik } from 'formik';
+import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import { FormField } from '../../components';
 import { APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
@@ -52,26 +52,20 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
       ...values,
       apis: values.apis.join(','),
     };
-    const request = new Request(APPLY_URL, {
-      body: JSON.stringify(applicationBody),
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    });
 
     try {
-      const response: Response = await fetch(request);
-      // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
-      if (!response.ok && response.status !== 400) {
-        throw Error(response.statusText);
-      }
-      const json = await response.json() as DevApplicationResponse;
+      const response = await makeRequest<DevApplicationResponse>(APPLY_URL, {
+        body: JSON.stringify(applicationBody),
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      }, { responseType: ResponseType.JSON });
 
-      if (json.errors) {
-        throw Error(`Developer Application validation errors: ${json.errors.join(', ')}`);
-      } else if (!json.token && !json.clientID) {
+      const json = response.body as DevApplicationResponse;
+
+      if (!json.token && !json.clientID) {
         throw Error(
           'Developer Application endpoint returned 200 response with a valid response body',
         );
@@ -83,10 +77,6 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
         email: values.email,
       });
     } catch (error: unknown) {
-      Sentry.withScope(scope => {
-        scope.setLevel(Sentry.Severity.fromString('warning'));
-        Sentry.captureException(error);
-      });
       setSubmissionError(true);
     }
   };

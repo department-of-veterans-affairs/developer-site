@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Field } from 'formik';
 import React, { FC } from 'react';
-import toHtmlId from 'src/toHtmlId';
+import toHtmlId from '../../../toHtmlId';
 import { BaseProps, SubComponentProps } from '../FormField';
 
 export interface CheckBoxRadioFieldProps extends BaseProps {
@@ -9,11 +9,12 @@ export interface CheckBoxRadioFieldProps extends BaseProps {
   value?: string;
 }
 
-const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ name, label, shouldDisplayErrors, ...props }) => {
+const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ name, label, shouldDisplayErrors, type, value, ...props }) => {
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
+  const radioClass = type === 'radio' ? 'vads-u-margin--0' : '';
 
   const idReadyName = toHtmlId(name);
-  const fieldId = `${idReadyName}FormField`;
+  const fieldId = `${idReadyName}FormField${value ?? ''}`;
 
   return (
     <>
@@ -21,9 +22,11 @@ const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ n
         id={fieldId}
         name={name}
         aria-invalid={shouldDisplayErrors}
+        type={type}
+        value={value}
         {...props}
       />
-      <label htmlFor={fieldId} className={classNames(labelClass)}>{label}</label>
+      <label htmlFor={fieldId} className={classNames(labelClass, radioClass)}>{label}</label>
     </>
   );
 };
