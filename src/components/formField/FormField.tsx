@@ -19,14 +19,14 @@ type FormFieldProps = CheckBoxRadioFieldProps | OtherFieldProps;
 
 const isCheckOrRadio = (props: FormFieldProps): props is CheckBoxRadioFieldProps => ['checkbox', 'radio'].includes(props.type);
 
-export const FormField: FC<FormFieldProps> = props => {
+export const FormField: FC<FormFieldProps> = ({ className, ...props }) => {
   const { errors, touched } = useFormikContext();
 
   const shouldDisplayErrors = !!errors[props.name] && !!touched[props.name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
 
   return (
-    <div className={classNames(containerClass, props.className)}>
+    <div className={classNames(containerClass, className)}>
       {
         !isCheckOrRadio(props) && <OtherField shouldDisplayErrors={shouldDisplayErrors} {...props} />
       }

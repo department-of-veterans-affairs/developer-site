@@ -11,7 +11,7 @@ export interface CheckBoxRadioFieldProps extends BaseProps {
 
 const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ name, label, shouldDisplayErrors, type, value, ...props }) => {
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
-  const radioClass = type === 'radio' ? 'vads-u-margin--0' : '';
+  const radioClass = type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
 
   const idReadyName = toHtmlId(name);
   const fieldId = `${idReadyName}FormField${value ?? ''}`;

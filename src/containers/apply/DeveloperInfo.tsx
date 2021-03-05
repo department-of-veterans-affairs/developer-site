@@ -8,24 +8,28 @@ const DeveloperInfo = (): JSX.Element => (
       label="First name"
       name="firstName"
       required
+      className="vads-u-margin-top--4"
     />
 
     <FormField
       label="Last name"
       name="lastName"
       required
+      className="vads-u-margin-top--4"
     />
 
     <FormField
       label="Email"
       name="email"
       required
+      className="vads-u-margin-top--4"
     />
 
     <FormField
       label="Organization"
       name="organization"
       required
+      className="vads-u-margin-top--4"
     />
   </>
 );

@@ -19,7 +19,7 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
       </a>.
     </div>
     <fieldset className="vads-u-margin-top--1">
-      <legend className="vads-u-margin-top--0 legend-label">Can your application securely hide a client secret?</legend>
+      <legend className="vads-u-margin-top--0 legend-label">Can your application securely hide a client secret? <span className="form-required-span">(*Required)</span></legend>
       <FormField
         type="radio"
         label="Yes"
@@ -36,7 +36,13 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
       />
     </fieldset>
 
-    <FormField type="text" label="OAuth Redirect URI" name="oAuthRedirectURI" required />
+    <FormField
+      type="text"
+      label="OAuth Redirect URI"
+      name="oAuthRedirectURI"
+      required
+      className="vads-u-margin-top--4"
+    />
   </>
 );
 

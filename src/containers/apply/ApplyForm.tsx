@@ -84,7 +84,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   return (
     <div className="vads-l-row">
       <p
-        className={classNames('usa-font-lead', 'vads-u-font-family--sans', 'vads-u-margin-bottom--2')}
+        className={classNames('usa-font-lead', 'vads-u-font-family--sans', 'vads-u-margin-bottom--2', 'vads-u-margin-top--0')}
       >
         This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
         credentials you will receive are for sandbox development only. When your app is ready to go
@@ -114,7 +114,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
               <FormField
                 label={
                   <span>
-                    I agree to the <Link to="/terms-of-service">Terms of Service</Link>
+                    I agree to the <Link to="/terms-of-service">Terms of Service</Link> <span className="form-required-span">(*Required)</span>
                   </span>
                 }
                 name="termsOfService"
