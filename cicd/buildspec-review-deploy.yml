@@ -1,5 +1,5 @@
 ######################################################################
-#  Developer Portal CodeBuild CI
+#  Developer Portal Review Deploy
 #
 #
 # Tool Links:
@@ -53,6 +53,7 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
       # Verify PR is coming from source repository
       - pr-verify.sh -r ${REPO} -c ${COMMIT_HASH}
+      # Get PR Num
       - PRNUM=$(pr-number.sh -r ${REPO}  -c ${COMMIT_HASH})
       # Log all environment varbiables to cloudwatch in case we need to troubleshoot. AWS is nice enough to hide any secrets from parameter-store.
       - printenv
@@ -71,14 +72,17 @@ phases:
         EOF
         done
       - links=""
+        # Run build and generate links per environment
       - |
         for env in ${ENVIRONMENTS}; do
-          time="${time}\n${phase}-${env} - $(date +%r) - started"
           make build_app ENVIRONMENT=${env} || exit 1
           links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${s3_review_bucket}/${s3_branch}/${commit_hash}/${env}/index.html) <br>"
         done
+      # Check CI status of other checks
       - gh-status.sh -r ${REPO} -c ${COMMIT_HASH} -x ${XCHECKS}
+      # Deploy To s3 review bucket
       - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
+      # If Review deploy is assocaited with PR, comment on PR.
       - |
         if [[ ! -z ${PRNUM} ]]; then
           comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
