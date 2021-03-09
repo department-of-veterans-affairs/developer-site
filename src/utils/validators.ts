@@ -1,6 +1,6 @@
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PRESENCE_PATTERN = /^(?!\s*$).+/;
-const PARTIAL_URL_PATTER = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
+const PARTIAL_URL_PATTERN = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
 
 export const validatePresence = (fieldName: string, value: string): string | undefined => {
   if (!PRESENCE_PATTERN.test(value)) {
@@ -19,7 +19,7 @@ export const validateEmail = (value: string): string | undefined => {
 };
 
 export const validateOAuthRedirectURI = (value: string): string | undefined => {
-  if (!PARTIAL_URL_PATTER.test(value)) {
+  if (!PARTIAL_URL_PATTERN.test(value)) {
     return 'Must be an http or https URI.';
   }
 
