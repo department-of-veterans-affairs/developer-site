@@ -15,7 +15,7 @@ export const testPaths = [
   '/explore',
   '/explore/health',
   '/explore/benefits',
-  '/explore/health/docs/authorization',
+  '/explore/authorization?api=claims',
   '/explore/health/docs/quickstart',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
