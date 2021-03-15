@@ -9,6 +9,7 @@ import flagIcon from '../../../node_modules/uswds/src/img/favicons/favicon-40.pn
 import dotGovIcon from '../../assets/icon-dot-gov.svg';
 import httpsIcon from '../../assets/icon-https.svg';
 import './Banner.scss';
+import { AppVersion } from '../../components';
 
 const GuidanceBoxPropTypes = {
   children: PropTypes.node,
@@ -81,6 +82,7 @@ const Banner = (): JSX.Element => {
                   aria-hidden="true"
                 />
               </div>
+              <AppVersion />
               <div
                 className={classNames(
                   'site-notice-text',
