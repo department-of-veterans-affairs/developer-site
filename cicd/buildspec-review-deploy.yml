@@ -55,8 +55,9 @@ phases:
       # Get PR Num
       - PRNUM=$(pr-number.sh -r ${REPO}  -c ${COMMIT_HASH})
       - |
-        if [[ ! -z ${PRNUM} ]]; then
+        if [[ -z ${PRNUM} ]]; then
           echo "No PR Found aborting job"
+          exit 1
         fi
       # Log all environment varbiables to cloudwatch in case we need to troubleshoot. AWS is nice enough to hide any secrets from parameter-store.
       - printenv
@@ -69,7 +70,7 @@ phases:
       - |
         for env in ${ENVIRONMENTS}; do
         cat <<EOF > .env.${env}.local
-        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}
+        PUBLIC_URL=/${COMMIT_HASH}/${env}
         REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
         EOF
         done
@@ -78,10 +79,10 @@ phases:
       - |
         for env in ${ENVIRONMENTS}; do
           make build_app ENVIRONMENT=${env} || exit 1
-          links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
+          links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}/index.html) <br>"
         done
       # Deploy To s3 review bucket
-      - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
+      - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${COMMIT_HASH}/
       - |
           comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
       - gh pr comment ${PRNUM} --body "${comment}"
