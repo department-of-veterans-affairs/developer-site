@@ -70,7 +70,7 @@ phases:
       - |
         for env in ${ENVIRONMENTS}; do
         cat <<EOF > .env.${env}.local
-        PUBLIC_URL=/${COMMIT_HASH}/${env}
+        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}
         REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
         EOF
         done
